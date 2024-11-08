@@ -242,6 +242,32 @@ h3 {
   height: 60px;
   background-color: #cd7f32; /* Bronse */
 }
+/* Legg til i App.css eller PlayerList.css */
+
+.player-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.player-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.remove-player-button {
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.remove-player-button:hover {
+  color: darkred;
+}
+
 
 /* Responsiv tabell */
 @media screen and (max-width: 600px) {
