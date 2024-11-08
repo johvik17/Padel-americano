@@ -1,22 +1,19 @@
+// ScoreBoard.js
+
 import React from 'react';
 
-function ScoreBoard({ scores, sorted = false }) {
-  const scoreEntries = Object.entries(scores).map(([player, score]) => ({
-    player,
-    score,
-  }));
-
-  if (sorted) {
-    scoreEntries.sort((a, b) => b.score - a.score);
-  }
+function ScoreBoard({ scores }) {
+  const sortedScores = Object.entries(scores)
+    .map(([player, score]) => ({ player, score }))
+    .sort((a, b) => b.score - a.score);
 
   return (
-    <div>
+    <div className="scoreboard">
       <h2>Poengtavle</h2>
       <ul>
-        {scoreEntries.map((item) => (
-          <li key={item.player}>
-            {item.player}: {item.score} poeng
+        {sortedScores.map(({ player, score }) => (
+          <li key={player}>
+            {player}: {score} poeng
           </li>
         ))}
       </ul>

@@ -1,10 +1,19 @@
 // generateMatches.js
 
-export function generateRounds(players, numRounds, matchType) {
-    const matches = [];
-    const totalPlayers = players.length;
+// Hjelpefunksjon for å shuffle en array
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  }
   
-    if (totalPlayers < 2) {
+  export function generateRounds(players, numRounds, matchType) {
+    const matches = [];
+  
+    if (players.length < 2) {
       alert('Det må være minst to spillere for å generere kamper.');
       return matches;
     }
@@ -12,57 +21,57 @@ export function generateRounds(players, numRounds, matchType) {
     // Kopier spillerlisten
     let playerList = [...players];
   
-    // Hvis antall spillere er oddetall, legg til en "BYE" spiller
-    let hasBye = false;
-    if (totalPlayers % 2 !== 0) {
-      playerList.push('BYE');
-      hasBye = true;
+    // Bestem lagstørrelse basert på matchType
+    const teamSize = matchType === 'singel' ? 1 : 2;
+  
+    // Valider at antall spillere passer for valgt matchType
+    const requiredPlayers = teamSize * 2; // Antall spillere per kamp
+    if (playerList.length % requiredPlayers !== 0) {
+      alert(
+        `Antall spillere må være delelig med ${requiredPlayers} for å spille ${teamSize}v${teamSize}-kamper.`
+      );
+      return matches;
     }
   
-    const numPlayers = playerList.length;
-    const half = numPlayers / 2;
-  
-    // Generer Round Robin-matrise
-    const roundsPerCycle = numPlayers - 1;
-    let totalRounds = numRounds;
-  
-    // Beregn antall nødvendige sykluser
-    const cycles = Math.ceil(totalRounds / roundsPerCycle);
-  
+    const totalPlayers = playerList.length;
     let roundNumber = 1;
   
-    for (let cycle = 0; cycle < cycles; cycle++) {
-      // Opprett en kopi av spillerlisten for denne syklusen
-      let cyclePlayers = [...playerList];
+    // Generer runder
+    for (let round = 0; round < numRounds; round++) {
+      let roundMatches = [];
   
-      for (let round = 0; round < roundsPerCycle; round++) {
-        if (roundNumber > totalRounds) break;
+      // Shuffle spillerlisten for hver runde for variasjon
+      playerList = shuffleArray(playerList);
   
-        const roundMatches = [];
-        for (let i = 0; i < half; i++) {
-          const player1 = cyclePlayers[i];
-          const player2 = cyclePlayers[numPlayers - 1 - i];
+      if (matchType === 'singel') {
+        // For 1v1-kamper
+        for (let i = 0; i < totalPlayers; i += 2) {
+          const player1 = playerList[i];
+          const player2 = playerList[i + 1];
   
-          if (player1 !== 'BYE' && player2 !== 'BYE') {
-            roundMatches.push({
-              id: `${roundNumber}-${i}`,
-              round: roundNumber,
-              players: [player1, player2],
-            });
-          }
+          roundMatches.push({
+            id: `${roundNumber}-${i / 2}`,
+            round: roundNumber,
+            players: [player1, player2],
+          });
         }
+      } else {
+        // For 2v2-kamper
+        for (let i = 0; i < totalPlayers; i += 4) {
+          const team1 = [playerList[i], playerList[i + 1]];
+          const team2 = [playerList[i + 2], playerList[i + 3]];
   
-        matches.push(...roundMatches);
-  
-        // Roter spillerlisten
-        cyclePlayers = [
-          cyclePlayers[0],
-          ...cyclePlayers.slice(-1),
-          ...cyclePlayers.slice(1, -1),
-        ];
-  
-        roundNumber++;
+          roundMatches.push({
+            id: `${roundNumber}-${i / 4}`,
+            round: roundNumber,
+            players: [...team1, ...team2],
+            teams: [team1, team2], // Legger til lagene for enklere referanse
+          });
+        }
       }
+  
+      matches.push(...roundMatches);
+      roundNumber++;
     }
   
     return matches;

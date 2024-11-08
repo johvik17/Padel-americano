@@ -5,7 +5,7 @@ import PlayerList from './PlayerList';
 import MatchList from './MatchList';
 import ScoreBoard from './ScoreBoard';
 import FinalResults from './FinalResults';
-import { generateRounds } from './generateMatches'; // Importer generateRounds-funksjonen
+import { generateRounds } from './generateMatches';
 import './App.css';
 
 function App() {
@@ -20,10 +20,14 @@ function App() {
   const [tournamentFinished, setTournamentFinished] = useState(false);
 
   const numRoundsRef = useRef(null);
-  const nextRoundButtonRef = useRef(null); // Referanse til "Neste runde"-knappen
+  const nextRoundButtonRef = useRef(null);
 
   const addPlayer = (name) => {
     setPlayers([...players, name]);
+  };
+
+  const removePlayer = (name) => {
+    setPlayers(players.filter((player) => player !== name));
   };
 
   const handleGenerateRounds = () => {
@@ -64,19 +68,35 @@ function App() {
       .forEach((match) => {
         const score = roundScores[match.id];
         if (score) {
-          const half = match.players.length / 2;
-          match.players.slice(0, half).forEach((player) => {
+          if (matchType === 'singel') {
+            // For 1v1-kamper
+            const player1 = match.players[0];
+            const player2 = match.players[1];
+
             setScores((prevScores) => ({
               ...prevScores,
-              [player]: (prevScores[player] || 0) + score.team1Points,
+              [player1]: (prevScores[player1] || 0) + score.team1Points,
+              [player2]: (prevScores[player2] || 0) + score.team2Points,
             }));
-          });
-          match.players.slice(half).forEach((player) => {
-            setScores((prevScores) => ({
-              ...prevScores,
-              [player]: (prevScores[player] || 0) + score.team2Points,
-            }));
-          });
+          } else {
+            // For 2v2-kamper
+            const team1 = match.teams[0];
+            const team2 = match.teams[1];
+
+            team1.forEach((player) => {
+              setScores((prevScores) => ({
+                ...prevScores,
+                [player]: (prevScores[player] || 0) + score.team1Points,
+              }));
+            });
+
+            team2.forEach((player) => {
+              setScores((prevScores) => ({
+                ...prevScores,
+                [player]: (prevScores[player] || 0) + score.team2Points,
+              }));
+            });
+          }
         }
       });
 
@@ -109,49 +129,48 @@ function App() {
         </div>
       ) : (
         <>
-          <PlayerList addPlayer={addPlayer} players={players} />
+          <PlayerList
+            addPlayer={addPlayer}
+            removePlayer={removePlayer}
+            players={players}
+          />
 
           <div>
             <label>Antall runder:</label>
             <input
               type="number"
-              value={numRounds}
-              ref={numRoundsRef}
-              onChange={(e) => {
-                const value = e.target.value;
-                setNumRounds(value === '' ? '' : Math.max(1, parseInt(value)));
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleGenerateRounds();
-                }
-              }}
               min="1"
+              value={numRounds}
+              onChange={(e) => setNumRounds(parseInt(e.target.value) || '')}
+              ref={numRoundsRef}
             />
-
-            <div>
-              <label>Kampformat:</label>
-              <select value={matchType} onChange={(e) => setMatchType(e.target.value)}>
-                <option value="singel">Singel (1v1)</option>
-                <option value="dobbel">Dobbel (2v2)</option>
-              </select>
-            </div>
-
-            <button onClick={handleGenerateRounds}>Generer Runder</button>
           </div>
+
+          <div>
+            <label>Kampformat:</label>
+            <select
+              value={matchType}
+              onChange={(e) => setMatchType(e.target.value)}
+            >
+              <option value="singel">1v1</option>
+              <option value="dobbel">2v2</option>
+            </select>
+          </div>
+
+          <button onClick={handleGenerateRounds}>Generer runder</button>
 
           {matches.length > 0 && (
             <>
               <h2>Runde {currentRound}</h2>
               <MatchList
                 key={roundKey}
-                matches={matches.filter((match) => match.round === currentRound)} // Filtrer kampene her
+                matches={matches.filter((match) => match.round === currentRound)}
                 updateRoundScores={updateRoundScores}
                 roundScores={roundScores}
                 nextRoundButtonRef={nextRoundButtonRef}
               />
               <button ref={nextRoundButtonRef} onClick={nextRound}>
-                Neste runde
+                {currentRound < numRounds ? 'Neste runde' : 'Vis resultater'}
               </button>
 
               <ScoreBoard scores={scores} />

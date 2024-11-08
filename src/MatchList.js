@@ -1,82 +1,75 @@
 // MatchList.js
 
-import React, { useRef } from 'react';
+import React from 'react';
 
-function MatchList({ matches, updateRoundScores, roundScores, nextRoundButtonRef }) {
-  const inputRefs = useRef([]);
-
-  const handleScoreChange = (e, matchId, team, otherTeamPoints) => {
-    const points = parseInt(e.target.value) || 0;
-    const updatedScores =
-      team === 1
-        ? { team1Points: points, team2Points: otherTeamPoints }
-        : { team1Points: otherTeamPoints, team2Points: points };
-
-    updateRoundScores(matchId, updatedScores.team1Points, updatedScores.team2Points);
-  };
-
-  const handleScoreKeyDown = (e, currentIndex) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const nextIndex = currentIndex + 1;
-      if (inputRefs.current[nextIndex]) {
-        inputRefs.current[nextIndex].focus();
-      } else {
-        // Ingen flere inntastingsfelt, fokusér på "Neste runde"-knappen
-        if (nextRoundButtonRef && nextRoundButtonRef.current) {
-          nextRoundButtonRef.current.focus();
-        }
-      }
-    }
-  };
-
+function MatchList({
+  matches,
+  updateRoundScores,
+  roundScores,
+  nextRoundButtonRef,
+}) {
   return (
-    <div>
-      <ul>
-        {matches.map((match, matchIndex) => (
-          <li key={match.id}>
-            {match.players.length === 2 ? (
-              <>
-                {match.players[0]} vs {match.players[1]}
-              </>
-            ) : (
-              <>
-                {match.players[0]} &amp; {match.players[1]} vs {match.players[2]} &amp; {match.players[3]}
-              </>
-            )}
-            <div>
-              <input
-                type="number"
-                placeholder="Poeng lag 1"
-                ref={(el) => (inputRefs.current[matchIndex * 2] = el)}
-                onChange={(e) =>
-                  handleScoreChange(
-                    e,
-                    match.id,
-                    1,
-                    roundScores[match.id]?.team2Points || 0
-                  )
-                }
-                onKeyDown={(e) => handleScoreKeyDown(e, matchIndex * 2)}
-              />
-              <input
-                type="number"
-                placeholder="Poeng lag 2"
-                ref={(el) => (inputRefs.current[matchIndex * 2 + 1] = el)}
-                onChange={(e) =>
-                  handleScoreChange(
-                    e,
-                    match.id,
-                    2,
-                    roundScores[match.id]?.team1Points || 0
-                  )
-                }
-                onKeyDown={(e) => handleScoreKeyDown(e, matchIndex * 2 + 1)}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="MatchList">
+      {matches.map((match, index) => (
+        <div key={match.id} className="match">
+          <h3>Kamp {index + 1}</h3>
+          {match.teams ? (
+            // For 2v2-kamper
+            <>
+              <div className="team">
+                <strong>Lag 1:</strong> {match.teams[0].join(' og ')}
+              </div>
+              <div className="team">
+                <strong>Lag 2:</strong> {match.teams[1].join(' og ')}
+              </div>
+            </>
+          ) : (
+            // For 1v1-kamper
+            <>
+              <div>
+                <strong>Spiller 1:</strong> {match.players[0]}
+              </div>
+              <div>
+                <strong>Spiller 2:</strong> {match.players[1]}
+              </div>
+            </>
+          )}
+
+          {/* Input for poeng */}
+          <div className="score-input">
+            <input
+              type="number"
+              min="0"
+              placeholder={
+                match.teams ? 'Lag 1 poeng' : 'Spiller 1 poeng'
+              }
+              value={roundScores[match.id]?.team1Points || ''}
+              onChange={(e) =>
+                updateRoundScores(
+                  match.id,
+                  parseInt(e.target.value) || 0,
+                  roundScores[match.id]?.team2Points || 0
+                )
+              }
+            />
+            <input
+              type="number"
+              min="0"
+              placeholder={
+                match.teams ? 'Lag 2 poeng' : 'Spiller 2 poeng'
+              }
+              value={roundScores[match.id]?.team2Points || ''}
+              onChange={(e) =>
+                updateRoundScores(
+                  match.id,
+                  roundScores[match.id]?.team1Points || 0,
+                  parseInt(e.target.value) || 0
+                )
+              }
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
