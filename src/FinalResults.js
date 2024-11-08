@@ -16,14 +16,13 @@ function FinalResults({ scores }) {
   const restOfPlayers = sortedScores.slice(3);
 
   // Opprett en lyd-instans
-  const [audio] = useState(new Audio('/kjæh.mp3'));
-
-  // Spill av lyden når komponenten monteres
-  
+  const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/kjæh.mp3'));
 
   return (
     <div className="final-results-container">
-      <Confetti width={width} height={height} />
+      <div className="confetti-wrapper">
+        <Confetti width={width} height={height} />
+      </div>
       <TrophyRain />
       <h2>Resultater fra Turneringen</h2>
 

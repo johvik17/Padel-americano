@@ -9,10 +9,10 @@ function TrophyRain() {
   const createTrophies = () => {
     const trophyContainer = document.getElementById('trophy-container');
     if (trophyContainer) {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 30; i++) {
         const trophy = document.createElement('div');
         trophy.className = 'trophy';
-        trophy.textContent = '🏆🎾🔥'; // Setter emoji som innhold
+        trophy.textContent = '🏆'; // Setter emoji som innhold
         trophy.style.left = Math.random() * 100 + 'vw';
         trophy.style.animationDelay = Math.random() * 5 + 's';
         trophy.addEventListener('animationend', () => {
