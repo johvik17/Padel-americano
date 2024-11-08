@@ -1,38 +1,295 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Generelle stiler */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e90ff 0%, #216f02 100%);
+  color: #333;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Sentrerer innholdet horisontalt */
+  align-items: flex-start; /* Starter innholdet fra toppen */
   min-height: 100vh;
+  padding: 20px; /* Gir litt luft rundt boksen på mindre skjermer */
+}
+
+.App {
+  width: 100%;
+  max-width: 900px; /* Øk maksimal bredde etter behov */
+  background-color: rgba(255, 255, 255, 0.95); /* Gjennomsiktig hvit bakgrunn for kontrast */
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px; /* Økt padding for mer luft */
+  box-sizing: border-box;
+  text-align: center;
+  margin: 20px auto; /* Dette sentrerer boksen horisontalt */
+  transition: all 0.3s ease; /* Smooth overgang ved endring */
+}
+
+/* Overskrift */
+h1 {
+  font-size: 2.2em;
+  color: #444;
+  margin-bottom: 20px; /* Øk marg for mer avstand */
+}
+
+/* Seksjonsoverskrifter */
+h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+/* Inntastingsfelt og knapper */
+input[type="text"],
+input[type="number"],
+select {
+  padding: 10px; /* Økt padding for større felter */
+  margin: 8px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 6px; /* Litt mer avrunding */
+  font-size: 1.1em; /* Økt tekststørrelse */
+}
+
+button {
+  padding: 12px 24px; /* Gjør knapper større */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em; /* Øk tekststørrelsen */
+  transition: background-color 0.3s ease;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  background-color: #004494;
+}
+
+/* Spillernavn og poengtavle */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+li {
+  padding: 10px;
+  background-color: #f1f3f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+/* Layout for innstillinger */
+div label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  text-align: left;
+}
+
+div {
+  margin: 10px 0;
+}
+
+/* Runder og kampoversikt */
+h2 {
+  margin-top: 20px;
+}
+
+h3 {
+  font-size: 1.3em;
+  margin: 15px 0;
+}
+
+.MatchList {
+  margin-top: 20px;
+}
+
+/* Resultatside-stiler */
+.final-results-container {
+  width: 100%;
+  max-width: 900px; /* Øk maksimal bredde for bedre plass */
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Tillater horisontal scrolling hvis nødvendig */
+  position: relative; /* Sørger for at absolutte elementer plasseres relativt til denne containeren */
+}
+
+/* Resultattabell-stiler */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #ddd;
+  padding: 15px;
+  font-size: 1.1em;
+  text-align: center; /* Sentrerer tekst i cellene */
+}
+
+.results-table th {
+  background-color: #f1f3f5;
+  font-weight: bold;
+}
+
+.results-table td {
+  background-color: #fafafa;
+}
+
+/* Start ny turnering-knapp */
+.final-results-container button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.final-results-container button:hover {
+  background-color: #0056b3;
+}
+
+.final-results-container button:active {
+  background-color: #004494;
+}
+
+/* Stil for pallen */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 40px 0;
+}
+
+.podium-spot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0 10px;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.podium-spot.first {
+  order: 2;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.podium-spot.second {
+  order: 1;
+}
+
+.podium-spot.third {
+  order: 3;
+}
+
+.podium-rank {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.podium-player {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.podium-score {
+  font-size: 1em;
+  color: #555;
+}
+
+.podium-spot::before {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 20px;
+  background-color: #ccc;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.podium-spot.first::before {
+  height: 120px;
+  background-color: gold;
+}
+
+.podium-spot.second::before {
+  height: 90px;
+  background-color: silver;
+}
+
+.podium-spot.third::before {
+  height: 60px;
+  background-color: #cd7f32; /* Bronse */
+}
+
+/* Responsiv tabell */
+@media screen and (max-width: 600px) {
+  .results-table thead {
+    display: none; /* Skjul tabellhodet på små skjermer */
   }
-  to {
-    transform: rotate(360deg);
+
+  .results-table,
+  .results-table tbody,
+  .results-table tr,
+  .results-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .results-table tr {
+    margin-bottom: 15px;
+  }
+
+  .results-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .results-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+/* Responsiv tilpasning for pallen */
+@media screen and (max-width: 600px) {
+  .podium {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .podium-spot {
+    margin: 10px 0;
+  }
+
+  .podium-spot::before {
+    width: 80px;
   }
 }
