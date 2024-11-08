@@ -26,11 +26,6 @@ function App() {
     setPlayers([...players, name]);
   };
 
-  // Funksjon for å fjerne en spiller
-  const removePlayer = (name) => {
-    setPlayers(players.filter((player) => player !== name));
-  };
-
   const handleGenerateRounds = () => {
     if (!numRounds || numRounds < 1) {
       alert('Vennligst skriv inn et gyldig antall runder.');
@@ -114,20 +109,43 @@ function App() {
         </div>
       ) : (
         <>
-          <PlayerList
-            addPlayer={addPlayer}
-            removePlayer={removePlayer} // Sender removePlayer-funksjonen som prop
-            players={players}
-          />
+          <PlayerList addPlayer={addPlayer} players={players} />
 
-          {/* Resten av koden din, for eksempel input for antall runder og kampformat */}
+          <div>
+            <label>Antall runder:</label>
+            <input
+              type="number"
+              value={numRounds}
+              ref={numRoundsRef}
+              onChange={(e) => {
+                const value = e.target.value;
+                setNumRounds(value === '' ? '' : Math.max(1, parseInt(value)));
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleGenerateRounds();
+                }
+              }}
+              min="1"
+            />
+
+            <div>
+              <label>Kampformat:</label>
+              <select value={matchType} onChange={(e) => setMatchType(e.target.value)}>
+                <option value="singel">Singel (1v1)</option>
+                <option value="dobbel">Dobbel (2v2)</option>
+              </select>
+            </div>
+
+            <button onClick={handleGenerateRounds}>Generer Runder</button>
+          </div>
 
           {matches.length > 0 && (
             <>
               <h2>Runde {currentRound}</h2>
               <MatchList
                 key={roundKey}
-                matches={matches.filter((match) => match.round === currentRound)}
+                matches={matches.filter((match) => match.round === currentRound)} // Filtrer kampene her
                 updateRoundScores={updateRoundScores}
                 roundScores={roundScores}
                 nextRoundButtonRef={nextRoundButtonRef}

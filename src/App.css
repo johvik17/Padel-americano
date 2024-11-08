@@ -126,7 +126,6 @@ h3 {
   box-sizing: border-box;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow-x: auto; /* Tillater horisontal scrolling hvis nødvendig */
-  position: relative; /* Sørger for at absolutte elementer plasseres relativt til denne containeren */
 }
 
 /* Resultattabell-stiler */
@@ -174,7 +173,44 @@ h3 {
   background-color: #004494;
 }
 
-/* Stil for pallen */
+/* Responsiv tabell */
+@media screen and (max-width: 600px) {
+  .results-table thead {
+    display: none; /* Skjul tabellhodet på små skjermer */
+  }
+
+  .results-table,
+  .results-table tbody,
+  .results-table tr,
+  .results-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .results-table tr {
+    margin-bottom: 15px;
+  }
+
+  .results-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .results-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+  .final-results-container {
+    position: relative; /* Legg til dette hvis ikke allerede til stede */
+    /* ... eksisterende stil ... */
+  }
+  /* Stil for pallen */
 .podium {
   display: flex;
   justify-content: center;
@@ -242,69 +278,8 @@ h3 {
   height: 60px;
   background-color: #cd7f32; /* Bronse */
 }
-/* Legg til i App.css eller PlayerList.css */
 
-.player-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.player-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.remove-player-button {
-  margin-left: 10px;
-  background-color: transparent;
-  border: none;
-  color: red;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.remove-player-button:hover {
-  color: darkred;
-}
-
-
-/* Responsiv tabell */
-@media screen and (max-width: 600px) {
-  .results-table thead {
-    display: none; /* Skjul tabellhodet på små skjermer */
-  }
-
-  .results-table,
-  .results-table tbody,
-  .results-table tr,
-  .results-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .results-table tr {
-    margin-bottom: 15px;
-  }
-
-  .results-table td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-
-  .results-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-left: 15px;
-    font-weight: bold;
-    text-align: left;
-  }
-}
-
-/* Responsiv tilpasning for pallen */
+/* Responsiv tilpasning */
 @media screen and (max-width: 600px) {
   .podium {
     flex-direction: column-reverse;
@@ -318,4 +293,5 @@ h3 {
   .podium-spot::before {
     width: 80px;
   }
+}
 }
