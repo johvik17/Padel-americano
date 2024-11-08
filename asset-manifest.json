@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Padel-americano/static/css/main.87a8991e.css",
+    "main.css": "/Padel-americano/static/css/main.b407218a.css",
     "main.js": "/Padel-americano/static/js/main.58e66ea4.js",
     "static/js/453.6b83c210.chunk.js": "/Padel-americano/static/js/453.6b83c210.chunk.js",
     "index.html": "/Padel-americano/index.html",
-    "main.87a8991e.css.map": "/Padel-americano/static/css/main.87a8991e.css.map",
+    "main.b407218a.css.map": "/Padel-americano/static/css/main.b407218a.css.map",
     "main.58e66ea4.js.map": "/Padel-americano/static/js/main.58e66ea4.js.map",
     "453.6b83c210.chunk.js.map": "/Padel-americano/static/js/453.6b83c210.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.87a8991e.css",
+    "static/css/main.b407218a.css",
     "static/js/main.58e66ea4.js"
   ]
 }
