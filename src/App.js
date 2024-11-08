@@ -1,6 +1,6 @@
 // App.js
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PlayerList from './PlayerList';
 import MatchList from './MatchList';
 import ScoreBoard from './ScoreBoard';
@@ -21,6 +21,9 @@ function App() {
 
   const numRoundsRef = useRef(null);
   const nextRoundButtonRef = useRef(null);
+
+  // Opprett en lyd-instans
+  const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/kjæh.mp3'));
 
   const addPlayer = (name) => {
     setPlayers([...players, name]);
@@ -53,6 +56,9 @@ function App() {
     });
     setRoundScores(initialRoundScores);
     setRoundKey((prevKey) => prevKey + 1);
+
+    // Tilbakestill poeng og skjul poengtavlen
+    setScores({});
   };
 
   const updateRoundScores = (matchId, team1Points, team2Points) => {
@@ -104,6 +110,9 @@ function App() {
       setCurrentRound(currentRound + 1);
       setRoundKey((prevKey) => prevKey + 1);
     } else {
+      // Spill av lyden
+      audio.play();
+
       setTournamentFinished(true);
     }
   };
@@ -125,6 +134,8 @@ function App() {
       {tournamentFinished ? (
         <div>
           <FinalResults scores={scores} />
+          {/* Poengtavlen vises kun etter at turneringen er ferdig */}
+          <ScoreBoard scores={scores} />
           <button onClick={resetTournament}>Start ny turnering</button>
         </div>
       ) : (
@@ -164,16 +175,18 @@ function App() {
               <h2>Runde {currentRound}</h2>
               <MatchList
                 key={roundKey}
-                matches={matches.filter((match) => match.round === currentRound)}
+                matches={matches.filter(
+                  (match) => match.round === currentRound
+                )}
                 updateRoundScores={updateRoundScores}
                 roundScores={roundScores}
                 nextRoundButtonRef={nextRoundButtonRef}
               />
               <button ref={nextRoundButtonRef} onClick={nextRound}>
-                {currentRound < numRounds ? 'Neste runde' : 'Vis resultater'}
+                {currentRound < numRounds
+                  ? 'Neste runde'
+                  : 'Trykk for å se resultater'}
               </button>
-
-              <ScoreBoard scores={scores} />
             </>
           )}
         </>
