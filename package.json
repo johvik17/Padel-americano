@@ -43,5 +43,10 @@
   },
   "devDependencies": {
     "gh-pages": "^6.2.0"
+<<<<<<< HEAD
   }
+=======
+  },
+  "homepage": "https://johvik17.github.io/Padel-americano"
+>>>>>>> 6daddbbca41b09f59170b0ee89f3e37d68206ff3
 }

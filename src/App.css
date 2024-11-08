@@ -5,30 +5,30 @@ body {
   color: #333;
   margin: 0;
   display: flex;
-  justify-content: center; /* Sentrerer innholdet horisontalt */
-  align-items: flex-start; /* Starter innholdet fra toppen */
+  justify-content: center;
+  align-items: flex-start;
   min-height: 100vh;
-  padding: 20px; /* Gir litt luft rundt boksen på mindre skjermer */
+  padding: 20px;
 }
 
 .App {
   width: 100%;
-  max-width: 900px; /* Øk maksimal bredde etter behov */
-  background-color: rgba(255, 255, 255, 0.95); /* Gjennomsiktig hvit bakgrunn for kontrast */
+  max-width: 1000px; /* Økt maksimal bredde for større bokser */
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 30px; /* Økt padding for mer luft */
+  padding: 30px;
   box-sizing: border-box;
   text-align: center;
-  margin: 20px auto; /* Dette sentrerer boksen horisontalt */
-  transition: all 0.3s ease; /* Smooth overgang ved endring */
+  margin: 20px auto;
+  transition: all 0.3s ease;
 }
 
 /* Overskrift */
 h1 {
-  font-size: 2.2em;
+  font-size: 2.5em;
   color: #444;
-  margin-bottom: 20px; /* Øk marg for mer avstand */
+  margin-bottom: 20px;
 }
 
 /* Seksjonsoverskrifter */
@@ -43,24 +43,24 @@ h2 {
 input[type="text"],
 input[type="number"],
 select {
-  padding: 10px; /* Økt padding for større felter */
+  padding: 10px;
   margin: 8px 0;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   border: 1px solid #ddd;
-  border-radius: 6px; /* Litt mer avrunding */
-  font-size: 1.1em; /* Økt tekststørrelse */
+  border-radius: 6px;
+  font-size: 1.1em;
 }
 
 button {
-  padding: 12px 24px; /* Gjør knapper større */
+  padding: 12px 24px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.1em; /* Øk tekststørrelsen */
+  font-size: 1.1em;
   transition: background-color 0.3s ease;
   margin-top: 12px;
 }
@@ -73,60 +73,16 @@ button:active {
   background-color: #004494;
 }
 
-/* Spillernavn og poengtavle */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 10px 0;
-}
-
-li {
-  padding: 10px;
-  background-color: #f1f3f5;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  margin: 5px 0;
-  font-size: 1.1em;
-}
-
-/* Layout for innstillinger */
-div label {
-  font-weight: bold;
-  margin-top: 10px;
-  display: block;
-  text-align: left;
-}
-
-div {
-  margin: 10px 0;
-}
-
-/* Runder og kampoversikt */
-h2 {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: 1.3em;
-  margin: 15px 0;
-}
-
-.MatchList {
-  margin-top: 20px;
-}
-
 /* Resultatside-stiler */
 .final-results-container {
   width: 100%;
-  max-width: 900px; /* Øk maksimal bredde for bedre plass */
+  max-width: 1000px; /* Økt maksimal bredde for bedre plass */
   margin: 30px auto;
   padding: 30px;
   background-color: #fff;
   border-radius: 15px;
-  box-sizing: border-box;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow-x: auto; /* Tillater horisontal scrolling hvis nødvendig */
-  position: relative; /* Sørger for at absolutte elementer plasseres relativt til denne containeren */
+  overflow-x: auto;
 }
 
 /* Resultattabell-stiler */
@@ -141,7 +97,7 @@ h3 {
   border: 1px solid #ddd;
   padding: 15px;
   font-size: 1.1em;
-  text-align: center; /* Sentrerer tekst i cellene */
+  text-align: center;
 }
 
 .results-table th {
@@ -153,28 +109,7 @@ h3 {
   background-color: #fafafa;
 }
 
-/* Start ny turnering-knapp */
-.final-results-container button {
-  padding: 15px 30px;
-  font-size: 1.2em;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-}
-
-.final-results-container button:hover {
-  background-color: #0056b3;
-}
-
-.final-results-container button:active {
-  background-color: #004494;
-}
-
-/* Stil for pallen */
+/* Pallelementer */
 .podium {
   display: flex;
   justify-content: center;
@@ -240,55 +175,10 @@ h3 {
 
 .podium-spot.third::before {
   height: 60px;
-  background-color: #cd7f32; /* Bronse */
+  background-color: #cd7f32;
 }
 
-/* Responsiv tabell */
-@media screen and (max-width: 600px) {
-  .results-table thead {
-    display: none; /* Skjul tabellhodet på små skjermer */
-  }
-
-  .results-table,
-  .results-table tbody,
-  .results-table tr,
-  .results-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .results-table tr {
-    margin-bottom: 15px;
-  }
-
-  .results-table td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-
-  .results-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-left: 15px;
-    font-weight: bold;
-    text-align: left;
-  }
-}
-
-.confetti-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* Responsiv tilpasning for pallen */
+/* Responsiv tilpasning */
 @media screen and (max-width: 600px) {
   .podium {
     flex-direction: column-reverse;
@@ -302,4 +192,14 @@ h3 {
   .podium-spot::before {
     width: 80px;
   }
+}
+
+.confetti-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
 }
