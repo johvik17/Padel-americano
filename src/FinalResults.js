@@ -28,7 +28,7 @@ function FinalResults({ scores }) {
 
       {/* Legg til en knapp for å spille av lyden */}
       <button className="play-audio-button" onClick={() => audio.play()}>
-        KJÆH
+        Trykk her for å se resultatene
       </button>
 
       {/* Pall for topp 3 spillere */}
