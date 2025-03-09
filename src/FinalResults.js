@@ -5,17 +5,23 @@ import TrophyRain from './TrophyRain';
 
 function FinalResults({ scores }) {
   const { width, height } = useWindowSize();
+  const [sortedScores, setSortedScores] = useState([]);
 
-  // Sorter spillerne basert på poengsum
-  const sortedScores = Object.entries(scores)
-    .map(([player, score]) => ({ player, score }))
-    .sort((a, b) => b.score - a.score);
+  // Sorter scores når det endres
+  useEffect(() => {
+    if (scores && Object.keys(scores).length > 0) {
+      const sorted = Object.entries(scores)
+        .map(([player, score]) => ({ player, score: score || 0 }))
+        .sort((a, b) => b.score - a.score);
+      setSortedScores(sorted);
+    }
+  }, [scores]);
 
-  // Del opp i topp 3 og resten
+  // Topp 3
   const topThree = sortedScores.slice(0, 3);
   const restOfPlayers = sortedScores.slice(3);
 
-  // Opprett en lyd-instans
+  // Lyd
   const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/kjæh.mp3'));
 
   return (
@@ -24,33 +30,32 @@ function FinalResults({ scores }) {
         <Confetti width={width} height={height} />
       </div>
       <TrophyRain />
-      <h2>Resultater fra Turneringen</h2>
 
-      {/* Legg til en knapp for å spille av lyden */}
+      <h2>Resultater fra Turneringen</h2>
       <button className="play-audio-button" onClick={() => audio.play()}>
         Kjæh!
       </button>
 
-      {/* Pall for topp 3 spillere */}
+      {/* Pall */}
       <div className="podium">
         <div className="podium-spot second">
           <div className="podium-rank">2</div>
           <div className="podium-player">{topThree[1]?.player || 'Ingen'}</div>
-          <div className="podium-score">{topThree[1]?.score || ''}</div>
+          <div className="podium-score">{topThree[1]?.score || 0} poeng</div>
         </div>
         <div className="podium-spot first">
           <div className="podium-rank">1</div>
           <div className="podium-player">{topThree[0]?.player || 'Ingen'}</div>
-          <div className="podium-score">{topThree[0]?.score || ''}</div>
+          <div className="podium-score">{topThree[0]?.score || 0} poeng</div>
         </div>
         <div className="podium-spot third">
           <div className="podium-rank">3</div>
           <div className="podium-player">{topThree[2]?.player || 'Ingen'}</div>
-          <div className="podium-score">{topThree[2]?.score || ''}</div>
+          <div className="podium-score">{topThree[2]?.score || 0} poeng</div>
         </div>
       </div>
 
-      {/* Resten av spillerne i en tabell */}
+      {/* Resten av spillerne */}
       {restOfPlayers.length > 0 && (
         <>
           <h3>Øvrige resultater</h3>
@@ -67,7 +72,7 @@ function FinalResults({ scores }) {
                 <tr key={item.player}>
                   <td data-label="Plass">{index + 4}</td>
                   <td data-label="Spiller">{item.player}</td>
-                  <td data-label="Poeng">{item.score}</td>
+                  <td data-label="Poeng">{item.score} poeng</td>
                 </tr>
               ))}
             </tbody>
