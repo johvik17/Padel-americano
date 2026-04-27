@@ -1,0 +1,27 @@
+/* TrophyRain.css */
+
+#trophy-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999;
+  }
+  
+  .trophy {
+    position: absolute;
+    top: -10%;
+    font-size: 2rem; /* Juster størrelsen på emojien */
+    animation: fall linear infinite;
+    animation-duration: 5s;
+  }
+  
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
+    }
+  }
+  
