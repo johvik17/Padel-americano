@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Padel-americano/static/css/main.0fbe545a.css",
-    "main.js": "/Padel-americano/static/js/main.2d41cc60.js",
+    "main.css": "/Padel-americano/static/css/main.8315764f.css",
+    "main.js": "/Padel-americano/static/js/main.af427622.js",
     "static/js/453.6b83c210.chunk.js": "/Padel-americano/static/js/453.6b83c210.chunk.js",
+    "static/media/ChatGPT Image 27. apr. 2026, 22_54_14.png": "/Padel-americano/static/media/ChatGPT Image 27. apr. 2026, 22_54_14.b659740e086bdf9d1fed.png",
     "index.html": "/Padel-americano/index.html",
-    "main.0fbe545a.css.map": "/Padel-americano/static/css/main.0fbe545a.css.map",
-    "main.2d41cc60.js.map": "/Padel-americano/static/js/main.2d41cc60.js.map",
+    "main.8315764f.css.map": "/Padel-americano/static/css/main.8315764f.css.map",
+    "main.af427622.js.map": "/Padel-americano/static/js/main.af427622.js.map",
     "453.6b83c210.chunk.js.map": "/Padel-americano/static/js/453.6b83c210.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0fbe545a.css",
-    "static/js/main.2d41cc60.js"
+    "static/css/main.8315764f.css",
+    "static/js/main.af427622.js"
   ]
 }
