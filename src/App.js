@@ -32,12 +32,22 @@ const PADEL_QUOTES = [
   'Du bommer 100% av smashene du ikke tar.',
   'En god padelspiller vinner poeng. Et godt lag vinner momentum.',
   'Små steg, lave skuldre, store poeng.',
-  'Angrep er det beste forsvaret, et solid forsvar kan vinne kamper.',
-  'VAMOOS! Det er ikke bare et slag, det er en holdning.',
+  'Angrep er det beste forsvar',
+  'VAMOOS!',
   'Padel handler om å vinne, ikke om å ha det gøy.',
   'Padel er som livet - det handler om hvor hardt du slår.',
   'I padel, som i livet, er det viktigere å komme tilbake etter et tap enn å unngå det.',
   'En god padelspiller vet at det ikke handler om å være best, men om å være bedre enn i går.',
+  'Tennis er for amatører, padel er for vinnere.',
+  'El raton, GOAT',
+  'Nettet er din beste venn og verste fiende på samme tid.',
+  'Smash alltid på motstanderene',
+  'JO dyrere racket, JO bedre spiller',
+  'Padel er en sport for de modige.',
+  'Trashtalk er en del av gamet',
+  'Hvis du taper så er det aldri din feil',
+  
+
 ];
 
 function clampScore(value, maxValue) {
@@ -47,16 +57,6 @@ function clampScore(value, maxValue) {
   if (!Number.isFinite(numericValue)) return '';
 
   return String(Math.min(Math.max(0, numericValue), maxValue));
-}
-
-function getRandomQuoteIndex(currentIndex) {
-  if (PADEL_QUOTES.length <= 1) return currentIndex;
-
-  let nextIndex = currentIndex;
-  while (nextIndex === currentIndex) {
-    nextIndex = Math.floor(Math.random() * PADEL_QUOTES.length);
-  }
-  return nextIndex;
 }
 
 function App() {
@@ -74,7 +74,6 @@ function App() {
   const [setupError, setSetupError] = useState('');
   const [quoteIndex, setQuoteIndex] = useState(0);
 
-  const selectedTournament = TOURNAMENTS[tournamentType];
   const currentRound = rounds[currentRoundIndex];
   const standings = useMemo(
     () =>
@@ -195,7 +194,6 @@ function App() {
       }));
     }
 
-    showNextQuote();
     setCurrentRoundIndex((index) => index + 1);
   };
 
@@ -215,24 +213,22 @@ function App() {
   };
 
   const showNextQuote = () => {
-    setQuoteIndex((currentIndex) => getRandomQuoteIndex(currentIndex));
-  };
+    setQuoteIndex((currentIndex) => {
+      if (PADEL_QUOTES.length <= 1) return currentIndex;
 
-  const renderQuoteCard = () => (
-    <div className="quote-card">
-      <p className="eyebrow">Dagens padel-boost</p>
-      <blockquote>{PADEL_QUOTES[quoteIndex]}</blockquote>
-      <button className="ghost-button" onClick={showNextQuote} type="button">
-        Ny quote
-      </button>
-    </div>
-  );
+      let nextIndex = currentIndex;
+      while (nextIndex === currentIndex) {
+        nextIndex = Math.floor(Math.random() * PADEL_QUOTES.length);
+      }
+      return nextIndex;
+    });
+  };
 
   return (
     <main className="app-shell">
       <section className="app-header">
         <p className="eyebrow">Padel turnering</p>
-        <h1>Padel {selectedTournament.label}</h1>
+        <h1>Padel Americano og Mexicano</h1>
         <p>Sett opp spillere, baner og runder. Appen lager kampene og holder poengene underveis.</p>
       </section>
 
@@ -280,7 +276,13 @@ function App() {
             <PlayerList addPlayer={addPlayer} removePlayer={removePlayer} players={players} />
           </div>
 
-          {renderQuoteCard()}
+          <div className="quote-card">
+            <p className="eyebrow">Dagens padel-boost</p>
+            <blockquote>{PADEL_QUOTES[quoteIndex]}</blockquote>
+            <button className="ghost-button" onClick={showNextQuote} type="button">
+              Ny quote
+            </button>
+          </div>
 
           <div className="action-bar">
             <button className="primary-button" onClick={startTournament} type="button">
@@ -320,15 +322,13 @@ function App() {
                       Runde {currentRound?.roundNumber} av {numRounds}
                     </h2>
                   </div>
-                  <button className="primary-button" onClick={resetTournament} type="button">
+                  <button className="ghost-button" onClick={resetTournament} type="button">
                     Avslutt
                   </button>
                 </div>
 
                 {currentRound && (
                   <>
-                    {renderQuoteCard()}
-
                     <MatchList
                       matchPointLimit={MATCH_POINT_LIMIT}
                       matches={currentRound.matches}
