@@ -11,6 +11,7 @@ import {
   generateMexicanoRound,
 } from './generateMatches';
 import './App.css';
+import logo from './ChatGPT Image 27. apr. 2026, 22_54_14.png';
 
 const TOURNAMENTS = {
   americano: {
@@ -227,8 +228,8 @@ function App() {
   return (
     <main className="app-shell">
       <section className="app-header">
-        <p className="eyebrow">Padel turnering</p>
-        <h1>Padel {selectedTournament.label}</h1>
+        <img src={logo} alt="Padel Logo" className="app-logo" />
+        <h1>Padelfiesta</h1>
         <p>Sett opp spillere, baner og runder. Appen lager kampene og holder poengene underveis.</p>
       </section>
 
@@ -352,7 +353,16 @@ function App() {
             )}
           </div>
 
-          <ScoreBoard standings={standings} />
+          <div className="sidebar">
+            <ScoreBoard standings={standings} />
+            <div className="quote-card">
+              <p className="eyebrow">Dagens padel-boost</p>
+              <blockquote>{PADEL_QUOTES[quoteIndex]}</blockquote>
+              <button className="ghost-button" onClick={showNextQuote} type="button">
+                Ny quote
+              </button>
+            </div>
+          </div>
         </section>
       )}
     </main>

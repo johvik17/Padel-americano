@@ -62,10 +62,17 @@ button {
   margin-bottom: 24px;
   max-width: 760px;
   padding-top: 12px;
+  position: relative;
+}
+
+.app-logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 0px;
 }
 
 .app-header h1 {
-  color: #ffffff;
+  color: #B7F500;
   font-size: clamp(2rem, 5vw, 4.4rem);
   line-height: 1;
   margin: 8px 0 12px;
@@ -80,7 +87,7 @@ button {
 }
 
 .eyebrow {
-  color: var(--lime);
+  color: #8ED600;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0;
@@ -101,6 +108,12 @@ button {
 .tournament-layout {
   align-items: start;
   grid-template-columns: minmax(0, 1fr) 340px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .panel,
