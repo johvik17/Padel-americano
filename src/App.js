@@ -46,7 +46,6 @@ const PADEL_QUOTES = [
   'Padel er en sport for de modige.',
   'Trashtalk er en del av gamet',
   'Hvis du taper så er det aldri din feil',
-  
 
 ];
 
@@ -74,6 +73,7 @@ function App() {
   const [setupError, setSetupError] = useState('');
   const [quoteIndex, setQuoteIndex] = useState(0);
 
+  const selectedTournament = TOURNAMENTS[tournamentType];
   const currentRound = rounds[currentRoundIndex];
   const standings = useMemo(
     () =>
@@ -228,7 +228,7 @@ function App() {
     <main className="app-shell">
       <section className="app-header">
         <p className="eyebrow">Padel turnering</p>
-        <h1>Padel Americano og Mexicano</h1>
+        <h1>Padel {selectedTournament.label}</h1>
         <p>Sett opp spillere, baner og runder. Appen lager kampene og holder poengene underveis.</p>
       </section>
 
